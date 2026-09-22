@@ -1,0 +1,34 @@
+output_dir = "runs"
+
+[policy]
+review_failure_threshold = 5
+
+[execution]
+timeout_seconds = 0.05
+max_attempts = 2
+retry_delay_seconds = 0.01
+
+[[scenarios]]
+name = "new device requires MFA"
+fault = "none"
+event = {event_id = "new-device", account_id = "synthetic-001", new_device = true, mfa_passed = false, failed_attempts = 0}
+
+[[scenarios]]
+name = "transient failure recovered"
+fault = "transient"
+event = {event_id = "transient", account_id = "synthetic-002", new_device = true, mfa_passed = false, failed_attempts = 0}
+
+[[scenarios]]
+name = "response lost after effect"
+fault = "lost_ack"
+event = {event_id = "lost-ack", account_id = "synthetic-003", new_device = true, mfa_passed = false, failed_attempts = 0}
+
+[[scenarios]]
+name = "timeout remains unknown"
+fault = "timeout"
+event = {event_id = "timeout", account_id = "synthetic-004", new_device = true, mfa_passed = false, failed_attempts = 0}
+
+[[scenarios]]
+name = "repeated failures need review"
+fault = "none"
+event = {event_id = "review", account_id = "synthetic-005", new_device = false, mfa_passed = true, failed_attempts = 7}
