@@ -1,7 +1,7 @@
 [project]
 name = "accountguard-agent"
 version = "0.1.0"
-description = "Account protection agent harness with a deterministic policy and mock tools"
+description = "Agent harness engineering demo with synthetic adapters and replayable execution"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
