@@ -1,5 +1,9 @@
 # Execution contract v0
 
+This is the contract of the current **single-tool fixture demo**, not a specification
+of the target business workflow. `LoginEvent` and the two mock actions exercise
+runtime behavior and are replaceable. See [reproduction scope](reproduction-scope.md).
+
 `LoginEvent`: event_id, account_id (synthetic identifiers), new_device, mfa_passed,
 failed_attempts. Unknown or malformed fields are rejected by dataclass construction.
 
