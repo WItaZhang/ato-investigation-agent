@@ -1,10 +1,14 @@
 [project]
-name = "accountguard-agent"
+name = "ato-investigation-agent"
 version = "0.1.0"
-description = "Account protection agent harness with a deterministic policy and mock tools"
+description = "ATO investigation reproduction with a legacy mock protection harness"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "openai>=3.19.2",
+    "pydantic>=2.13.5",
+    "pyyaml>=6.0.3",
+]
 
 [tool.ruff]
 line-length = 100

@@ -1,4 +1,45 @@
-# AccountGuard Agent
+# ATO Investigation Agent
+
+This project is being rebuilt to reproduce an account takeover investigation
+workflow: anomalous login cohorts, account evidence cards, attack reconstruction,
+retrospective victim discovery, and policy diagnosis. See the
+[reproduction plan](docs/reproduction-plan.md) for scope and unresolved details.
+
+## Investigation prototype
+
+```sh
+uv sync --locked
+uv run --locked python main.py --config configs/investigation.yaml --prepare-only
+# Configure OPENAI_API_KEY locally before the next command.
+uv run --locked python main.py --config configs/investigation.yaml
+```
+
+The first command generates synthetic data and cards without adjudicating them.
+The second uses real structured LLM responses for account judgments and evidence
+synthesis. Configuration selects GPT-5.4 mini, with a US$1 per-run reservation
+budget. API credentials are the sole documented environment-variable exception;
+all experimental settings live in YAML. No `.env` file is loaded automatically.
+Price assumptions are from the [official model page](https://developers.openai.com/api/docs/models/gpt-5.4-mini),
+checked on 2026-09-25; update them before running if provider rates change.
+The budget is an application estimate, not a provider-side billing guarantee.
+
+Each run saves its config, metrics, model-call audits and log under `logs/`.
+Generated inputs and isolated labels go to `data/staging/`; evidence and results
+go to `data/processed/`. No model receives the labels. Failed runs retain a failed
+status; missing credentials do not silently fall back to mock judgments.
+
+Implemented: baseline scan, cohort merging, evidence cards, real LLM adapter,
+evidence-ID checks, full-cohort prevalence bounds, basic observed-rule diagnosis,
+and bounded evidence synthesis. **Not yet implemented:** condition refinement,
+batch-registration filtering, stratified sequential sampling, full timeline
+reconstruction, validated retrospective expansion, or versioned knowledge sync.
+Full-cohort bounds describe unknown labels, not statistical confidence in LLM
+accuracy. Synthetic fixtures and mock tests do not establish real-world quality.
+
+## Legacy execution harness
+
+The code below is the **legacy AccountGuard prototype**, retained as a tested
+execution component. It is not the completed investigation pipeline.
 
 **账号防护 Agent 的最小执行框架 / A minimal account protection agent harness.**
 
